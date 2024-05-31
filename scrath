@@ -1,0 +1,32 @@
+#include <Arduino.h>
+#include <WiFiMulti.h>
+
+#define WIFI_SSID "ASUS super"
+#define WIFI_PASSWORD "peder123"
+
+WiFiMulti wifiMulti;
+
+// put function declarations here:
+int myFunction(int, int);
+
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(921600);
+  Serial.println("Hello World!");
+  wifiMulti.addAP(WIFI_SSID, WIFI_PASSWORD);
+
+  while (wifiMulti.run() != WL_CONNECTED) {
+    delay(100);
+  }
+
+  Serial.println("WiFi connected");
+
+}
+
+void loop() {
+digitalWrite(LED_BUILTIN, WiFi.status() == WL_CONNECTED);
+}
+
+int myFunction(int x, int y) {
+  return x + y;
+}

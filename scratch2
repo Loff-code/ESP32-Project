@@ -1,0 +1,98 @@
+#include <Arduino.h>
+#include <WiFi.h>
+#include <defines.h>
+#include <HTTPClient.h>
+#define WIFI_SSID "ASUS super"
+#define WIFI_PASSWORD "peder123"
+
+//Your Domain name with URL path or IP address with path
+String serverName = "https://loffy.dk/";
+
+// put function declarations here:
+int myFunction(int, int);
+void togglePin(int);
+void shiftBlink();
+void get_network_info();
+
+int outputPinArray[] = {32, 33, 25, 26, 27, 14, 12};
+  
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(921600);
+  Serial.println("Hello World!");
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.println("Connecting to WiFi");
+for (size_t i = 0; i < sizeof(outputPinArray)/sizeof(outputPinArray[0]); i++)
+  {
+    pinMode(outputPinArray[i], OUTPUT);
+  }
+  
+
+  
+}
+bool isWiFiConnecte = false;
+
+void loop() {
+  if (WiFi.status() == WL_CONNECTED && !isWiFiConnecte) {
+    Serial.println("Connected to WiFi");
+    digitalWrite(LED_BUILTIN, HIGH);
+    isWiFiConnecte = true;    
+    get_network_info();
+  }
+  shiftBlink();
+    delay(200);
+
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println(".");
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    delay(200);
+    isWiFiConnecte = false;
+  }
+  
+
+// int output = digitalRead(GPIO_PIN32);
+// Serial.println(output);
+
+}
+
+
+void shiftBlink(){
+  togglePin(32);
+  delay(200);
+  togglePin(33);
+  delay(200);
+  togglePin(25);
+  togglePin(26);
+  delay(500);
+  // for (size_t i = 0; i < 3; i++)
+  // {
+  //   togglePin(outputPinArray[i]);
+  // }
+  togglePin(32);
+  togglePin(33);
+  togglePin(25);
+  togglePin(26); 
+}
+
+void togglePin(int x) {
+  digitalWrite(x, !digitalRead(x));
+}
+
+int myFunction(int x, int y) {
+  return x + y;
+}
+
+void get_network_info(){
+    if(WiFi.status() == WL_CONNECTED) {
+        Serial.print("[*] Network information for ");
+        Serial.println(WIFI_SSID);
+        Serial.println("[+] BSSID : " + WiFi.BSSIDstr());
+        Serial.print("[+] Gateway IP : ");
+        Serial.println(WiFi.gatewayIP());
+        Serial.print("[+] Subnet Mask : ");
+        Serial.println(WiFi.subnetMask());
+        Serial.println((String)"[+] RSSI : " + WiFi.RSSI() + " dB");
+        Serial.print("[+] ESP32 IP : ");
+        Serial.println(WiFi.localIP());
+    }
+}
