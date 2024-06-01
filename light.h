@@ -19,6 +19,7 @@ int light(bool state, bool appendState){
   
   if (state)
   {
+  dspTime();
    Serial.println(output);
   }
   

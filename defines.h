@@ -2,6 +2,12 @@
 #define btn2 digitalRead(22)
 #define btn3 digitalRead(21)
 
+int year;
+int month;
+int day;
+int hour;
+int minute;
+int second;
 
 
 #define GPIO_PIN0 0

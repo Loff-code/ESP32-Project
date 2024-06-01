@@ -3,6 +3,7 @@
 const char *serverAddress = "http://192.168.1.131/data_receiver.php";
 
 void sendData(float sensorValue) {
+
   HTTPClient http;
 
   http.begin(serverAddress);

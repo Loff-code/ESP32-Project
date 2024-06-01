@@ -1,8 +1,23 @@
 #include <includes.h>
-void loopTest(){
+
+
+// Variables for date and time
+
+
+// Function to update date and time
+
+
+
+void loopTest() {
+updateDateTime();
+
 }
-void setupTest(){
+
+void setupTest() {
+  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+  printLocalTime();
 }
+
 
 void setup() {
   Serial.begin(921600);
@@ -12,7 +27,10 @@ void setup() {
   spiffSetup();
   setupTest();
   buttonSetup();
+  updateDateTime(); // Update date and time
+
 }
+
 
 
 void loop() {
@@ -29,3 +47,4 @@ void loop() {
     delay(1000);
     appendState, writeState = fileWrite("Hello World!", writeState);
 }
+

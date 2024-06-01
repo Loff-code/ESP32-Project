@@ -4,7 +4,10 @@
 #include <pins.h>
 #include <fileFunc.h>
 #include <LED.h>
+#include "time.h"
+#include <dateTime.h>
 #include <light.h>
-#include <NTPClient.h>
+// #include <NTPClient.h>
 #include <button.h>
 #include <sendData.h>
+
