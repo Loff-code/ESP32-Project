@@ -1,15 +1,14 @@
 #include <HTTPClient.h>
 
 const char *serverAddress = "http://192.168.1.131/data_receiver.php";
-
-void sendData(float sensorValue) {
+void sendData(float sensorValue, bool coolState) {
 
   HTTPClient http;
 
   http.begin(serverAddress);
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-  String postData = "sensor_data=" + String(sensorValue);
+  String postData = "sensor_data=" + String(sensorValue) + "&coolState=" + String(coolState);
 
   int httpResponseCode = http.POST(postData);
 

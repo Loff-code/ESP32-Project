@@ -39,12 +39,12 @@ void loop() {
     shiftBlink();
     delay(100);
     int lightLVL = light(lightState, appendState);
-    sendData(lightLVL);
+    sendData(lightLVL, appendState);
     delay(100);
     readState = fileRead(readState);
     // uploadFileToServer("/dir/test.txt");
     loopTest();
-    delay(1000);
+    delay(300);
     appendState, writeState = fileWrite("Hello World!", writeState);
 }
 
