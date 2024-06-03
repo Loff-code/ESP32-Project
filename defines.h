@@ -9,6 +9,10 @@ int hour;
 int minute;
 int second;
 
+bool checkState;
+bool actionState;
+
+int lightLVL;
 
 #define GPIO_PIN0 0
 #define GPIO_PIN1 1

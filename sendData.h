@@ -8,7 +8,9 @@ void sendData(float sensorValue, bool coolState) {
   http.begin(serverAddress);
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-  String postData = "sensor_data=" + String(sensorValue) + "&coolState=" + String(coolState);
+  String postData;
+  postData += "sensor_data=" + String(sensorValue);
+  postData += "&coolState=" + String(coolState);
 
   int httpResponseCode = http.POST(postData);
 
