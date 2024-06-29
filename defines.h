@@ -13,6 +13,12 @@ bool checkState;
 bool actionState;
 
 int lightLVL;
+enum State {
+  IDLE,
+  ACTION
+};
+
+State stateReg= IDLE;
 
 #define GPIO_PIN0 0
 #define GPIO_PIN1 1

@@ -10,8 +10,19 @@ void pinsSetup(){
   pinMode(22, INPUT);
   pinMode(21, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
-
+noTone(26);
 }
 void togglePin(int x) {
   digitalWrite(x, !digitalRead(x));
+}
+
+void turnOnPin(int x) {
+  digitalWrite(x, HIGH);
+}
+void turnOffPin(int x) {
+  digitalWrite(x, LOW);
+}
+
+void boolToPin(int x, bool y) {
+  digitalWrite(x, y ? HIGH : LOW);
 }

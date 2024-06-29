@@ -14,7 +14,7 @@ void updateDateTime() {
 }
 
 void dspTime(){
-Serial.print("Date: ");
+  Serial.print("Date: ");
   Serial.print(day);
   Serial.print("/");
   Serial.print(month);
