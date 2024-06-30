@@ -18,8 +18,9 @@ void setup()
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
   buttonSetup();
   setupTest();
-  playSong();
-  
+  // playSong();
+  tone(26, frq) ;
+  noTone(26);
 }
 
 void loop()

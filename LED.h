@@ -1,5 +1,6 @@
 #include <Arduino.h>
-void shiftBlink(){
+void shiftBlink()
+{
   togglePin(32);
   delay(200);
   togglePin(33);
@@ -14,5 +15,5 @@ void shiftBlink(){
   togglePin(32);
   togglePin(33);
   togglePin(25);
-  togglePin(26); 
+  togglePin(26);
 }

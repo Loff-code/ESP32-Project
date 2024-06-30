@@ -1,9 +1,11 @@
 #include <HTTPClient.h>
-
+int frq = 500;
 const char *serverAddress = "http://192.168.1.131:4000/data_receiver";
 const char *serverAddress1 = "http://192.168.1.131:4000/state";
+const char *serverAddress2 = "http://192.168.1.131:4000/frq";
 
-void sendData(float sensorValue, bool coolState) {
+void sendData(float sensorValue, bool coolState)
+{
   HTTPClient http;
 
   http.begin(serverAddress);
@@ -18,55 +20,97 @@ void sendData(float sensorValue, bool coolState) {
   postData += String(coolState ? "true" : "false");
 
   postData += "&time_stamp=";
-  if (hour < 10) postData += "0";
+  if (hour < 10)
+    postData += "0";
   postData += String(hour) + ":";
-  if (minute < 10) postData += "0";
+  if (minute < 10)
+    postData += "0";
   postData += String(minute) + ":";
-  if (second < 10) postData += "0";
+  if (second < 10)
+    postData += "0";
   postData += String(second);
 
   postData += "&date_stamp=";
-  if (day < 10) postData += "0";
+  if (day < 10)
+    postData += "0";
   postData += String(day) + "/";
-  if (month < 10) postData += "0";
+  if (month < 10)
+    postData += "0";
   postData += String(month) + "/";
   postData += String(year);
 
   int httpResponseCode = http.POST(postData);
 
-  if (httpResponseCode > 0) {
+  if (httpResponseCode > 0)
+  {
     String response = http.getString();
     // Serial.println("HTTP Response code: " + String(httpResponseCode));
-    if (httpResponseCode != 200) {
+    if (httpResponseCode != 200)
+    {
       Serial.println("Error: " + String(httpResponseCode));
       return;
     }
     // Serial.println("Response: " + response);
-     Serial.print("+");
-  } else {
+    // Serial.print("+");
+  }
+  else
+  {
     Serial.println("Error sending POST request");
   }
 
   http.end();
 }
-
-void getState() {
+void getFreq()
+{
+  HTTPClient http;
+  http.begin(serverAddress2);
+  int httpResponseCode = http.GET();
+  if (httpResponseCode > 0)
+  {
+    String response = http.getString();
+    // Serial.println("Response: " + response);
+    if (httpResponseCode != 200)
+    {
+      Serial.println("Error: " + String(httpResponseCode));
+      return;
+    }
+    frq = response.toInt();
+    
+  }
+  else
+  {
+    Serial.println("Error sending GET request");
+  }
+  http.end();
+}
+void getState()
+{
   HTTPClient http;
   http.begin(serverAddress1);
   int httpResponseCode = http.GET();
-  if (httpResponseCode > 0) {
+  if (httpResponseCode > 0)
+  {
     String response = http.getString();
     // Serial.println("Response: " + response);
-    Serial.print(".");
-    if (httpResponseCode != 200) {
+    // Serial.print(".");
+    if (httpResponseCode != 200)
+    {
       Serial.println("Error: " + String(httpResponseCode));
       return;
     }
     boolToPin(32, String(response.charAt(1)) == "1");
     boolToPin(33, String(response.charAt(2)) == "1");
     boolToPin(25, String(response.charAt(3)) == "1");
-    String(response.charAt(3)) == "1" ? tone(26, 1000) : noTone(26);
-    } else {
+    if (String(response.charAt(3)) == "1")
+  {
+    getFreq();
+  }
+    String(response.charAt(3)) == "1" ? tone(26, frq) : noTone(26);
+  }
+  
+  
+  else
+  {
     Serial.println("Error sending GET request");
   }
   http.end();
@@ -81,3 +125,4 @@ void getState() {
 // curl -X POST 192.168.1.131:4000/light_receiver      -d "red=0"      -d "yellow=0"       -d "green=1"
 // curl -X POST 192.168.1.131:4000/light_receiver      -d "red=0"      -d "yellow=1"       -d "green=0"
 // curl -X POST 192.168.1.131:4000/light_receiver      -d "red=1"      -d "yellow=0"       -d "green=0"
+// curl -X POST 192.168.1.131:4000/frq_receiver      -d "frq=200"

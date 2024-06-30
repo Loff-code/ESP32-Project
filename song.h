@@ -18,7 +18,7 @@ int noteDurations[] = {
     8, 8, 8, 8, 4, 4, 4, 4,
     4, 4, 4, 4, 4, 4, 4,
     4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
-    
+
 void playSong()
 {
   for (int thisNote = 0; thisNote < sizeof(melody) / sizeof(int); thisNote++)

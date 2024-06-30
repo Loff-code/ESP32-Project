@@ -1,6 +1,8 @@
-void updateDateTime() {
+void updateDateTime()
+{
   struct tm timeinfo;
-  if(!getLocalTime(&timeinfo)){
+  if (!getLocalTime(&timeinfo))
+  {
     Serial.println("Failed to obtain time");
     return;
   }
@@ -10,10 +12,10 @@ void updateDateTime() {
   hour = timeinfo.tm_hour;
   minute = timeinfo.tm_min;
   second = timeinfo.tm_sec;
-
 }
 
-void dspTime(){
+void dspTime()
+{
   Serial.print("Date: ");
   Serial.print(day);
   Serial.print("/");
