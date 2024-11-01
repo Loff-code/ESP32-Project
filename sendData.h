@@ -1,8 +1,12 @@
 #include <HTTPClient.h>
 int frq = 500;
-const char *serverAddress = "http://192.168.1.131:4000/data_receiver";
-const char *serverAddress1 = "http://192.168.1.131:4000/state";
-const char *serverAddress2 = "http://192.168.1.131:4000/frq";
+// const char host = "https://loffy.dk"
+// const char *serverAddress = "https://loffy.dk/data_receiver";
+// const char *serverAddress1 = "https://loffy.dk/state";
+// const char *serverAddress2 = "https://loffy.dk/frq";
+const char *serverAddress = "http://192.168.68.110/data_receiver";
+const char *serverAddress1 = "http://192.168.68.110/state";
+const char *serverAddress2 = "http://192.168.68.110/frq";
 
 void sendData(float sensorValue, bool coolState)
 {
@@ -75,7 +79,6 @@ void getFreq()
       return;
     }
     frq = response.toInt();
-    
   }
   else
   {
@@ -100,15 +103,17 @@ void getState()
     }
     boolToPin(32, String(response.charAt(1)) == "1");
     boolToPin(33, String(response.charAt(2)) == "1");
+    boolToPin(27, String(response.charAt(2)) == "1");
+    boolToPin(4, String(response.charAt(2)) == "1");
     boolToPin(25, String(response.charAt(3)) == "1");
+
     if (String(response.charAt(3)) == "1")
-  {
-    getFreq();
-  }
+    {
+      getFreq();
+    }
     String(response.charAt(3)) == "1" ? tone(26, frq) : noTone(26);
   }
-  
-  
+
   else
   {
     Serial.println("Error sending GET request");
@@ -118,11 +123,16 @@ void getState()
 
 // curl -X POST 192.168.1.131:4000/data_receiver      -d "sensor_data=2500.6"      -d "coolState=false"       -d "time_stamp=19:19:19"     -d "date_stamp=19/09/2021"
 // curl -X POST 192.168.1.131:4000/data_receiver      -d "sensor_data=2500.6"      -d "coolState=true"       -d "time_stamp=19:19:19"     -d "date_stamp=19/09/2021"
+// curl -X POST localhost:4000/data_receiver      -d "sensor_data=2500.6"      -d "coolState=true"       -d "time_stamp=19:19:19"     -d "date_stamp=19/09/2021"
+
 // curl -X GET 192.168.1.131:4000/data
 // curl -X GET 192.168.1.131:4000/state
 // curl -X POST 192.168.1.131:4000/light_receiver      -d "red=1"      -d "yellow=1"       -d "green=1"
 // curl -X POST 192.168.1.131:4000/light_receiver      -d "red=0"      -d "yellow=0"       -d "green=0"
 // curl -X POST 192.168.1.131:4000/light_receiver      -d "red=0"      -d "yellow=0"       -d "green=1"
 // curl -X POST 192.168.1.131:4000/light_receiver      -d "red=0"      -d "yellow=1"       -d "green=0"
-// curl -X POST 192.168.1.131:4000/light_receiver      -d "red=1"      -d "yellow=0"       -d "green=0"
+// curl -X POST 192.168.1.131/light_receiver      -d "red=1"      -d "yellow=0"       -d "green=0"
+// curl -X POST https://loffy.dk/light_receiver      -d "red=1"      -d "yellow=0"       -d "green=0"
+// curl -X POST http://82.211.219.245/light_receiver     -d "red=1"      -d "yellow=0"       -d "green=0"
+
 // curl -X POST 192.168.1.131:4000/frq_receiver      -d "frq=200"

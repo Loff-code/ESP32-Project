@@ -1,6 +1,6 @@
-#define btn1 digitalRead(23)
-#define btn2 digitalRead(22)
-#define btn3 digitalRead(21)
+// #define btn1 digitalRead(23)
+// #define btn2 digitalRead(22)
+// #define btn3 digitalRead(21)
 
 int year;
 int month;

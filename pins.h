@@ -1,5 +1,5 @@
 #include <Arduino.h>
-int outputPinArray[] = {32, 33, 25, 26, 27, 14, 12};
+int outputPinArray[] = {32, 33, 4, 25, 26, 27, 14};
 
 void pinsSetup()
 {
@@ -7,9 +7,11 @@ void pinsSetup()
   {
     pinMode(outputPinArray[i], OUTPUT);
   }
-  pinMode(23, INPUT);
-  pinMode(22, INPUT);
-  pinMode(21, INPUT);
+  // pinMode(23, INPUT);
+  // pinMode(22, INPUT);
+  // pinMode(21, INPUT);
+  pinMode(12, INPUT);
+
   pinMode(LED_BUILTIN, OUTPUT);
   noTone(26);
 }

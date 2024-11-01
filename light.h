@@ -24,7 +24,7 @@ int light(bool state, bool appendState){
   }
   
   
-  fileAppend(output, appendState);
+  // fileAppend(output, appendState);
   return analogValue;
 }
 
