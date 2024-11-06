@@ -1,12 +1,16 @@
 #include <HTTPClient.h>
 int frq = 500;
-// const char host = "https://loffy.dk"
+const char *host = "http://ssh.loffy.dk";
+const char *serverAddress = "http://ssh.loffy.dk/data_receiver";
+const char *serverAddress1 = "http://ssh.loffy.dk/state";
+const char *serverAddress2 = "http://ssh.loffy.dk/frq";
+// const char *host = "https://loffy.dk";
 // const char *serverAddress = "https://loffy.dk/data_receiver";
 // const char *serverAddress1 = "https://loffy.dk/state";
 // const char *serverAddress2 = "https://loffy.dk/frq";
-const char *serverAddress = "http://192.168.68.110/data_receiver";
-const char *serverAddress1 = "http://192.168.68.110/state";
-const char *serverAddress2 = "http://192.168.68.110/frq";
+// const char *serverAddress = "http://192.168.68.110/data_receiver";
+// const char *serverAddress1 = "http://192.168.68.110/state";
+// const char *serverAddress2 = "http://192.168.68.110/frq";
 
 void sendData(float sensorValue, bool coolState)
 {
