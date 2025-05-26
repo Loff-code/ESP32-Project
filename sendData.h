@@ -124,7 +124,7 @@ void getState()
   }
   http.end();
 }
-
+// curl -X POST loffy:4000/data_receiver      -d "sensor_data=2500.6"      -d "coolState=false"       -d "time_stamp=19:19:19"     -d "date_stamp=19/09/2021"
 // curl -X POST 192.168.1.131:4000/data_receiver      -d "sensor_data=2500.6"      -d "coolState=false"       -d "time_stamp=19:19:19"     -d "date_stamp=19/09/2021"
 // curl -X POST 192.168.1.131:4000/data_receiver      -d "sensor_data=2500.6"      -d "coolState=true"       -d "time_stamp=19:19:19"     -d "date_stamp=19/09/2021"
 // curl -X POST localhost:4000/data_receiver      -d "sensor_data=2500.6"      -d "coolState=true"       -d "time_stamp=19:19:19"     -d "date_stamp=19/09/2021"
