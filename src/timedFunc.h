@@ -21,10 +21,10 @@ void check(Args... args)
 
 bool everyX(int x)
 {
-  bool a = iv(0, 3);
-  for (size_t i = 1; i < 60 / x; i++)
-  {
-    a = a || iv(x * i - 1, x * i + 1);
-  }
-  return a;
+  // bool a = iv(0, 3);
+  // for (size_t i = 1; i < 60 / x; i++)
+  // {
+  //   a = a || iv(x * i - 1, x * i + 1);
+  // }
+  return second % x >= x - 2 || second % x <= 2;
 }

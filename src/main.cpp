@@ -7,7 +7,7 @@ int val = 0;        // define numeric variables val
 #define DHTPIN 23     // GPIO pin where the DHT data pin is connected
 #define DHTTYPE DHT11 // DHT11 sensor, change to DHT22 if you are using that
 DHT dht(DHTPIN, DHTTYPE);
-
+WiFiServer server(81);
 void loopTest()
 {
   val = digitalRead(buttonpin); // digital interface will be assigned a value of pin 3 to read val
@@ -41,6 +41,7 @@ void loopTest()
 
 void setupTest()
 {
+
   pinMode(Led, OUTPUT);      // define LED as output interface
   pinMode(buttonpin, INPUT); // output interface D0 is defined sensor
   Serial.println(F("DHT Sensor example with ESP32"));
@@ -48,6 +49,39 @@ void setupTest()
 
   pinMode(trans_pin, OUTPUT); // transmit is ouput
   pinMode(recv_pin, INPUT);   // receive is input
+                              // xTaskCreatePinnedToCore(
+  //     tcpTask,    // Task function
+  //     "TCP Task", // Name of the task
+  //     10000,      // Stack size for the task
+  //     NULL,       // Parameter to pass to the task
+  //     1,          // Task priority
+  //     NULL,       // Task handle
+  //     1);         // Core to pin the task (1 = second core)
+}
+
+void tcpTask(void *pvParameters)
+{
+  // server.begin(); // Start the server in the task
+
+  // while (true)
+  // {
+  //   WiFiClient client = server.available();
+  //   if (client)
+  //   {
+  //     while (client.connected())
+  //     {
+  //       if (client.available())
+  //       {
+  //         String request = client.readStringUntil('\r');
+  //         Serial.println("Received from client: " + request);
+  //         client.println("Message received");
+  //         client.flush();
+  //       }
+  //     }
+  //     client.stop();
+  //     Serial.println("Client disconnected");
+  //   }
+  // }
 }
 
 void setup()
@@ -83,6 +117,7 @@ void loop()
     sendData(lightLVL, true);
     loopTest();
     getDistance();
+
     stateReg = IDLE;
     break;
 
