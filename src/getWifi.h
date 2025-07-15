@@ -1,6 +1,5 @@
 #include <WiFi.h>
-#define WIFI_SSID "Bakz"
-#define WIFI_PASSWORD "Drivhuset#13"
+#include <wifiLogin.h>
 #include <HTTPClient.h>
 #include "time.h"
 const char *ntpServer = "pool.ntp.org";
