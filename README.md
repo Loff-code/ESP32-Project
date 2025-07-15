@@ -31,9 +31,3 @@
 3. **Build** — Open the project folder in your IDE, adjust any pin numbers in `defines.h`, then upload to your board.  
 4. **Wi-Fi** — Edit the SSID and password in `getWifi.h` (or in a separate secrets file).  
 5. **Run** — Open the serial monitor to watch log messages and confirm the board is publishing data to your web endpoint.
-
----
-
-## License
-
-MIT License — see `LICENSE` for details.
