@@ -3,6 +3,8 @@
 
 ---
 
+For this project I use vscode with the platformIO extension.
+
 ## Project structure
 
 | File | Purpose |
@@ -26,7 +28,7 @@
 
 ## Getting started
 
-1. **Hardware** — An ESP-8266 or ESP-32, an LDR or similar light sensor, a couple of LEDs, a buzzer, and optional relays / ultrasonic sensor.  
+1. **Hardware** — An ESP-32, an LDR or similar light sensor, a couple of LEDs, a buzzer, and optional relays / ultrasonic sensor.  
 2. **Software** — PlatformIO or the Arduino IDE, plus the ESP core and any required libraries.  
 3. **Build** — Open the project folder in your IDE, adjust any pin numbers in `defines.h`, then upload to your board.  
 4. **Wi-Fi** — Edit the SSID and password in `getWifi.h` (or in a separate secrets file).  
