@@ -1,13 +1,13 @@
 #include <Arduino.h>
-const int btnPin[] = {23, 22, 21, 19};                    // Pins where your buttons are connected
-volatile bool btnPress[4] = {false, false, false, false}; // Flags to indicate button press
-volatile bool lightState = false;                         // Flag to indicate light state
-volatile bool readState = false;                          // Flag to indicate light state
-volatile bool appendState = false;                        // Flag to indicate light state
-volatile bool writeState = false;                         // Flag to indicate light state
+const int btnPin[] = {23, 22, 21, 19};
+volatile bool btnPress[4] = {false, false, false, false};
+volatile bool lightState = false;
+volatile bool readState = false;
+volatile bool appendState = false;
+volatile bool writeState = false;
 void IRAM_ATTR buttonISR0()
 {
-  btnPress[0] = true; // Set flag to true indicating button press
+  btnPress[0] = true;
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   Serial.println("Btn 0 Pressed");
   writeState = !writeState;
@@ -15,7 +15,7 @@ void IRAM_ATTR buttonISR0()
 }
 void IRAM_ATTR buttonISR1()
 {
-  btnPress[1] = true; // Set flag to true indicating button press
+  btnPress[1] = true;
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   Serial.println("Btn 1 Pressed");
   appendState = !appendState;
@@ -24,7 +24,7 @@ void IRAM_ATTR buttonISR1()
 
 void IRAM_ATTR buttonISR2()
 {
-  btnPress[2] = true; // Set flag to true indicating button press
+  btnPress[2] = true;
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   Serial.println("Btn 2 Pressed");
 
@@ -34,7 +34,7 @@ void IRAM_ATTR buttonISR2()
 
 void IRAM_ATTR buttonISR3()
 {
-  btnPress[3] = true; // Set flag to true indicating button press
+  btnPress[3] = true;
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   Serial.println("Btn 3 Pressed");
 
@@ -46,10 +46,10 @@ void buttonSetup()
 {
   for (int i = 0; i < 4; i++)
   {
-    pinMode(btnPin[i], INPUT_PULLUP); // Set button pin as input with pull-up
+    pinMode(btnPin[i], INPUT_PULLUP);
   }
-  attachInterrupt(digitalPinToInterrupt(btnPin[0]), buttonISR0, FALLING); // Attach interrupt to button pin
-  attachInterrupt(digitalPinToInterrupt(btnPin[1]), buttonISR1, FALLING); // Attach interrupt to button pin
-  attachInterrupt(digitalPinToInterrupt(btnPin[2]), buttonISR2, FALLING); // Attach interrupt to button pin
-  attachInterrupt(digitalPinToInterrupt(btnPin[3]), buttonISR3, FALLING); // Attach interrupt to button pin
+  attachInterrupt(digitalPinToInterrupt(btnPin[0]), buttonISR0, FALLING);
+  attachInterrupt(digitalPinToInterrupt(btnPin[1]), buttonISR1, FALLING);
+  attachInterrupt(digitalPinToInterrupt(btnPin[2]), buttonISR2, FALLING);
+  attachInterrupt(digitalPinToInterrupt(btnPin[3]), buttonISR3, FALLING);
 }

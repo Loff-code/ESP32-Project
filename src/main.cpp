@@ -1,37 +1,21 @@
 #include <includes.h>
 #include "DHT.h"
-int Led = 22;       // define LED Interface
-int buttonpin = 21; // define D0 Sensor Interface
-int val = 0;        // define numeric variables val
-// Define the DHT sensor type and the GPIO pin
-#define DHTPIN 23     // GPIO pin where the DHT data pin is connected
-#define DHTTYPE DHT11 // DHT11 sensor, change to DHT22 if you are using that
+#define DHTPIN 23
+#define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
-WiFiServer server(81);
+
+float humidity;
+float temperature;
 void loopTest()
 {
-  val = digitalRead(buttonpin); // digital interface will be assigned a value of pin 3 to read val
-  if (val == HIGH)              // When the sound detection module detects a signal, LED flashes
-  {
-    digitalWrite(Led, HIGH);
-  }
-  else
-  {
-    digitalWrite(Led, LOW);
-  }
-  Serial.print(val);
-  // Read humidity and temperature
-  float humidity = dht.readHumidity();
-  float temperature = dht.readTemperature(); // Celsius by default
-
-  // Check if the readings failed
+  humidity = dht.readHumidity();
+  temperature = dht.readTemperature();
   if (isnan(humidity) || isnan(temperature))
   {
     Serial.println(F("Failed to read from DHT sensor!"));
     return;
   }
 
-  // Print the results to Serial Monitor
   Serial.print(F("Humidity: "));
   Serial.print(humidity);
   Serial.print(F("%  Temperature: "));
@@ -41,47 +25,10 @@ void loopTest()
 
 void setupTest()
 {
-
-  pinMode(Led, OUTPUT);      // define LED as output interface
-  pinMode(buttonpin, INPUT); // output interface D0 is defined sensor
-  Serial.println(F("DHT Sensor example with ESP32"));
   dht.begin();
-
-  pinMode(trans_pin, OUTPUT); // transmit is ouput
-  pinMode(recv_pin, INPUT);   // receive is input
-                              // xTaskCreatePinnedToCore(
-  //     tcpTask,    // Task function
-  //     "TCP Task", // Name of the task
-  //     10000,      // Stack size for the task
-  //     NULL,       // Parameter to pass to the task
-  //     1,          // Task priority
-  //     NULL,       // Task handle
-  //     1);         // Core to pin the task (1 = second core)
-}
-
-void tcpTask(void *pvParameters)
-{
-  // server.begin(); // Start the server in the task
-
-  // while (true)
-  // {
-  //   WiFiClient client = server.available();
-  //   if (client)
-  //   {
-  //     while (client.connected())
-  //     {
-  //       if (client.available())
-  //       {
-  //         String request = client.readStringUntil('\r');
-  //         Serial.println("Received from client: " + request);
-  //         client.println("Message received");
-  //         client.flush();
-  //       }
-  //     }
-  //     client.stop();
-  //     Serial.println("Client disconnected");
-  //   }
-  // }
+  // Setup distance
+  // pinMode(trans_pin, OUTPUT);
+  // pinMode(recv_pin, INPUT);
 }
 
 void setup()
@@ -106,17 +53,16 @@ void loop()
   case IDLE:
     getWifi();
     getState();
-
     updateDateTime();
-    check(everyX(5));
+    check(second % 5 == 0);
 
     break;
 
   case ACTION:
     lightLVL = light1();
-    sendData(lightLVL, true);
+    sendData(lightLVL, dht.readHumidity(), dht.readTemperature(), digitalRead(12));
     loopTest();
-    getDistance();
+    // getDistance();
 
     stateReg = IDLE;
     break;

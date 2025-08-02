@@ -12,15 +12,14 @@ const char *serverAddress2 = "http://ssh.loffy.dk/frq";
 // const char *serverAddress1 = "http://192.168.68.110/state";
 // const char *serverAddress2 = "http://192.168.68.110/frq";
 
-void sendData(float sensorValue, bool coolState)
+void sendData(float sensorValue, float humidityValue, float temperatureValue, bool coolState)
 {
   HTTPClient http;
 
   http.begin(serverAddress);
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   String postData;
-  postData.reserve(100); // Reserve memory for the string to avoid frequent reallocations
-
+  postData.reserve(100);
   postData += "sensor_data=";
   postData += String(sensorValue);
 
@@ -46,6 +45,11 @@ void sendData(float sensorValue, bool coolState)
     postData += "0";
   postData += String(month) + "/";
   postData += String(year);
+
+  postData += "&humidity=";
+  postData += String(humidityValue);
+  postData += "&temperature=";
+  postData += String(temperatureValue);
 
   int httpResponseCode = http.POST(postData);
 

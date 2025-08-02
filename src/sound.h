@@ -26,5 +26,5 @@ void getDistance()
     Serial.print(dist_raw);
     Serial.println(" cm");
 
-    delay(100); // can alter based on needs of application
+    delay(100);
 }

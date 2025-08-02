@@ -6,16 +6,16 @@ bool iv(int from, int to)
 template <typename... Args>
 void check(Args... args)
 {
-  bool cond = (args || ...); // Fold expression to evaluate OR for all arguments
+
+  bool cond = (args || ...);
   if (cond && !checkState)
   {
-    // Serial.println("Hello");
     checkState = true;
     stateReg = ACTION;
   }
   else if (!cond)
   {
-    checkState = false; // Reset the flag if outside the interval
+    checkState = false;
   }
 }
 
