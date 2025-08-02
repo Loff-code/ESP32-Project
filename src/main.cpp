@@ -1,31 +1,12 @@
 #include <includes.h>
-#include "DHT.h"
-#define DHTPIN 23
-#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
+#include <getDHT.h>
 
-float humidity;
-float temperature;
 void loopTest()
 {
-  humidity = dht.readHumidity();
-  temperature = dht.readTemperature();
-  if (isnan(humidity) || isnan(temperature))
-  {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
-  }
-
-  Serial.print(F("Humidity: "));
-  Serial.print(humidity);
-  Serial.print(F("%  Temperature: "));
-  Serial.print(temperature);
-  Serial.println(F("°C"));
 }
 
 void setupTest()
 {
-  dht.begin();
   // Setup distance
   // pinMode(trans_pin, OUTPUT);
   // pinMode(recv_pin, INPUT);
@@ -44,6 +25,8 @@ void setup()
   // playSong();
   tone(26, frq);
   noTone(26);
+
+  dht.begin();
 }
 
 void loop()
