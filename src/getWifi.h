@@ -1,5 +1,5 @@
 #include <WiFi.h>
-#include <wifiLogin.h>
+#include <secrets.h>
 #include <HTTPClient.h>
 #include "time.h"
 const char *ntpServer = "pool.ntp.org";

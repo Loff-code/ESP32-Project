@@ -1,16 +1,17 @@
+#include "secrets.h"
 #include <HTTPClient.h>
 int frq = 500;
-const char *host = "http://ssh.loffy.dk";
-const char *serverAddress = "http://ssh.loffy.dk/data_receiver";
-const char *serverAddress1 = "http://ssh.loffy.dk/state";
-const char *serverAddress2 = "http://ssh.loffy.dk/frq";
+const char *apiSensors = "http://ssh.loffy.dk/api/sensors";
+const char *apiState = "http://ssh.loffy.dk/api/devices/state";
+const char *apiFreq = "http://ssh.loffy.dk/api/devices/frq";
 
 void sendData(float sensorValue, float humidityValue, float temperatureValue, bool coolState)
 {
   HTTPClient http;
 
-  http.begin(serverAddress);
+  http.begin(apiSensors);
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  http.addHeader("Authorization", "Bearer " ESP_SECRET);
   String postData;
   postData.reserve(100);
   postData += "sensor_data=";
@@ -68,7 +69,7 @@ void sendData(float sensorValue, float humidityValue, float temperatureValue, bo
 void getFreq()
 {
   HTTPClient http;
-  http.begin(serverAddress2);
+  http.begin(apiFreq);
   int httpResponseCode = http.GET();
   if (httpResponseCode > 0)
   {
@@ -90,7 +91,7 @@ void getFreq()
 void getState()
 {
   HTTPClient http;
-  http.begin(serverAddress1);
+  http.begin(apiState);
   int httpResponseCode = http.GET();
   if (httpResponseCode > 0)
   {
