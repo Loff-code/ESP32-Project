@@ -1,4 +1,4 @@
-#include "secrets.h"
+#include "wifiLogin.h"
 #include <HTTPClient.h>
 int frq = 500;
 const char *apiSensors = "http://ssh.loffy.dk/api/sensors";
