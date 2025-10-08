@@ -3,7 +3,7 @@
 #include <WiFiClientSecure.h>
 #include <Update.h>
 
-#define CURRENT_VERSION "1.1.0"
+#define CURRENT_VERSION "1.0.0"
 const char *version_url = "https://loffy.dk/api/ota/esp32/version";
 const char *firmware_url = "https://loffy.dk/api/ota/esp32/firmware";
 
