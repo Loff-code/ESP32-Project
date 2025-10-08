@@ -1,16 +1,53 @@
 #include <includes.h>
 #include <getDHT.h>
+#include <WiFiClientSecure.h>
+#include <Update.h>
+
+#define CURRENT_VERSION "1.1.0"
+const char *version_url = "https://loffy.dk/api/ota/esp32/version";
+const char *firmware_url = "https://loffy.dk/api/ota/esp32/firmware";
+
+void otaUpdate()
+{
+  WiFiClientSecure client;
+  client.setInsecure();
+  HTTPClient https;
+  if (https.begin(client, version_url))
+  {
+    if (https.GET() == 200)
+    {
+      String newVersion = https.getString();
+      newVersion.trim();
+      if (newVersion != CURRENT_VERSION)
+      {
+        https.end();
+        if (https.begin(client, firmware_url))
+        {
+          if (https.GET() == 200)
+          {
+            int len = https.getSize();
+            WiFiClient *stream = https.getStreamPtr();
+            if (Update.begin(len))
+            {
+              Update.writeStream(*stream);
+              if (Update.end() && Update.isFinished())
+                ESP.restart();
+            }
+          }
+          https.end();
+        }
+      }
+    }
+    https.end();
+  }
+}
 
 void loopTest()
 {
+  otaUpdate();
 }
 
-void setupTest()
-{
-  // Setup distance
-  // pinMode(trans_pin, OUTPUT);
-  // pinMode(recv_pin, INPUT);
-}
+void setupTest() {}
 
 void setup()
 {
@@ -18,14 +55,10 @@ void setup()
   Serial.println("Hello World!");
   wifiSetup();
   pinsSetup();
-  // spiffSetup();
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
-  // buttonSetup();
   setupTest();
-  // playSong();
   tone(26, frq);
   noTone(26);
-
   dht.begin();
 }
 
@@ -38,36 +71,14 @@ void loop()
     getState();
     updateDateTime();
     check(second % 5 == 0);
-
     break;
-
   case ACTION:
     lightLVL = light1();
     sendData(lightLVL, dht.readHumidity(), dht.readTemperature(), digitalRead(12));
     loopTest();
-    // getDistance();
-
     stateReg = IDLE;
     break;
-
   default:
     break;
   }
 }
-
-// readState = fileRead(readState);
-//  uploadFileToServer("/dir/test.txt");
-
-// appendState, writeState = fileWrite("Hello World!", writeState);
-//  printLocalTime();
-//  if (actionState) {
-//    // Serial.println("Action");
-//    // readState = !readState;
-//    // delay(100);
-//    // shiftBlink();
-//    // delay(100);
-//    // lightLVL = light(lightState, appendState);
-//    lightLVL = light1();
-//    sendData(lightLVL, appendState);
-//    actionState = false;
-//  }

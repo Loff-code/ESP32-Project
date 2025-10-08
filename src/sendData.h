@@ -15,7 +15,7 @@ void sendData(float sensorValue, float humidityValue, float temperatureValue, bo
   String postData;
   postData.reserve(100);
   postData += "sensor_data=";
-  postData += String(sensorValue);
+  postData += String(2000);
 
   postData += "&coolState=";
   postData += String(coolState ? "true" : "false");
